@@ -25,9 +25,9 @@
     \frametitle{}
     \begin{block}{How to use this in composition $f \cdot g$}
         \begin{itemize}
-            \item $y, log_g = g(x)$
-            \item $z, log_f = f(y)$
-            \item $log = log_g + log_f$
+            \item $y, logString_g = g(x)$
+            \item $z, logString_f = f(y)$
+            \item $log = logString_g + logString_f$
             \item $return (z, log)$
         \end{itemize}
 \begin{lstlisting}
@@ -98,8 +98,8 @@
     \end{block}
     \begin{block}{Typedef of $bind$}
         \begin{itemize}
-            \item bind takes a function that takes a $float$ and returns a $string$ and a $(float, string)$ and returns
-            a new function that will take a $(float, string)$ and returns a $(float, string)$
+            \item Iinputs: bind takes a function that takes a $float$ and returns a $string$ and a $(float, string)$
+            \item Output: a new function that will take a $(float, string)$ and returns a $(float, string)$
             \item $bind :: (float \rightarrow (float, string)) \rightarrow (float, string) \rightarrow ((float, string) \rightarrow (float, string))$
         \end{itemize}
     \end{block}

@@ -22,6 +22,17 @@
 \end{frame}
 
 \begin{frame}[fragile]{}
+    \begin{block}{How to do $sqrt \cdot cbrt$}
+        \begin{itemize}
+            \item First we apply the $cbrt$
+            \item For each result in the returned list we apply $sqrt$
+            \item This returns a new list of length 3 where each element is a list of length 2
+            \item To form a single list of all 6 roots we simply flatten the list
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+\begin{frame}[fragile]{}
     \begin{block}{Sounds familiar}
         \begin{itemize}
             \item $bind \: f \: x = concat ( map \: f \: x)$

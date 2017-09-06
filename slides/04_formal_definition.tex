@@ -12,7 +12,7 @@
 
 \begin{frame}[fragile]{Formal definition}
     \begin{block}{}
-        A monad is a triplet $(m, bind, unit)$. $bind$ and $unit$ must satisfy a bunch of mathimatical laws
+        A monad is a triplet $(m, bind, unit)$. $bind$ and $unit$ must satisfy a bunch of mathematical laws
     \end{block}
 \end{frame}
 
@@ -24,6 +24,9 @@
             \item You define how you can open a box to apply a function to the element inside of it ($bind$)
             \item If those two methods follow some basic rules (commutativity, ...) you can chain them nicely
         \end{itemize}
+        \begin{center}
+            \includegraphics[scale=0.3]{images/monad_box}
+        \end{center}
     \end{block}
 \end{frame}
 
@@ -34,7 +37,7 @@
     \end{block}
 \end{frame}
 
-\begin{frame}[t]{title}
+\begin{frame}[t]{}
     \begin{block}{Other usefull monads}
         \begin{itemize}
             \item Maybe Monad: Abstracts away null checks
@@ -42,5 +45,19 @@
             \item Continuation Monad: Abstracts away call stack manipulations
             \item ...
         \end{itemize}
+    \end{block}
+\end{frame}
+
+\begin{frame}[t]{}
+    \begin{block}{Questions?}
+        \begin{itemize}
+            \item Need additional examples?
+            \item Something not clear?
+            \item Want a different explanation?
+            \item You know where to find me !!
+        \end{itemize}
+    \end{block}
+    \begin{block}{}
+        And when you understand monads fully, you are ready for Arrows
     \end{block}
 \end{frame}
