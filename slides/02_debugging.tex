@@ -1,0 +1,172 @@
+\begin{frame}
+    \frametitle{Slightly contrived example}
+    \begin{block}{Something you may want to do}
+        \begin{itemize}
+            \item Add debugging statements to function calls
+            \item Remember: no destructive changes (adding to a global log list)
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Intuitive implementation}
+    \begin{block}{}
+        \begin{itemize}
+            \item $f \: x \rightarrow (x+1, ``f \: was \: called")$
+            \item $g \: x \rightarrow (x+2, ``g \: was \: called")$
+        \end{itemize}
+    \end{block}
+    \begin{block}{}
+        $f$ and $g$ both take a $float$ and return a tuple $(float, string)$
+    \end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{}
+    \begin{block}{How to use this in composition $f \cdot g$}
+        \begin{itemize}
+            \item $y, log_g = g(x)$
+            \item $z, log_f = f(y)$
+            \item $log = log_g + log_f$
+            \item $return (z, log)$
+        \end{itemize}
+\begin{lstlisting}
+\end{lstlisting}
+    \end{block}
+    \begin{block}{}
+        It can be done, but it is ugly and long winded
+    \end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{}
+    \begin{block}{}
+        \begin{itemize}
+            \item if $f$ and $g$ simply took a $float$ and returned a $float$ we could write $f \cdot g$
+            \item $f \: x \rightarrow x+1$
+            \item $g \: x \rightarrow x+2$
+            \item $f \cdot g \: 3 \rightarrow 6$
+        \end{itemize}
+    \end{block}
+    \begin{block}{}
+        \begin{itemize}
+            \item But they take a $float$ and output a $(float, string)$. Simply composing them would not work
+            \item $f \: x \rightarrow (x+1, ``f \: called.")$
+            \item $g \: x \rightarrow (x+2, ``g \: called.")$
+            \item $f \cdot g \: 3 \rightarrow$ Error: f takes only one argument but got 2
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{}
+    \begin{block}{}
+        \begin{itemize}
+            \item Lets redefine $f$ and $g$
+            \item $f' \: x \: logSoFar \rightarrow (x+1, logSoFar + ``f \: called.")$
+            \item $g' \: x \: logSoFar \rightarrow (x+2, logSoFar + ``g \: called.")$
+            \item $f' \cdot g' \: 3 \: ``" \rightarrow (6, ``g \: called.f \: called.")$
+            \item So now this works. Jeej
+            \item Unfortunatly we don't have a $f'$ but an $f$ which is inconvenient
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Small Tangent}
+    \begin{block}{Simple type definition}
+        \begin{itemize}
+            \item $f$ is a function that takes a $float$ and returns a $(float, string)$
+            \item $f :: float \rightarrow (float, string)$
+        \end{itemize}
+    \end{block}
+    \begin{block}{More complex type definition}
+        \begin{itemize}
+            \item $f$ is a function that takes a function $g$ and a $float$ and returns a $string$
+            \item the function $g$ that is an argument of $f$ will take a $float$ and return a $(float, string)$
+            \item $f :: g \rightarrow float \rightarrow string$
+            \item $f :: (float \rightarrow (float, string)) \rightarrow float \rightarrow string$
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Bind}
+    \begin{block}{}
+        The main problem is that $f$ does not take $(float, string)$ but just $float$. Lets create $bind$, a higher
+        order function that can help us
+    \end{block}
+    \begin{block}{Typedef of $bind$}
+        \begin{itemize}
+            \item bind takes a function that takes a $float$ and returns a $string$ and a $(float, string)$ and returns
+            a new function that will take a $(float, string)$ and returns a $(float, string)$
+            \item $bind :: (float \rightarrow (float, string)) \rightarrow (float, string) \rightarrow ((float, string) \rightarrow (float, string))$
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{}
+    \begin{block}{Define $bind$}
+        \begin{itemize}
+            \item $bind \: f' \: (g_f, g_s) = $
+            \item $\:\:\: let (f_f, f_s) = f'(g_f)$
+            \item $\:\:\: in (f_f, g_s + f_s)$
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{}
+    \begin{block}{Cool, but what good does it do?}
+        \begin{itemize}
+            \item Given a pair of debuggable functions $f$ and $g$ of type $float \rightarrow (float, string)$
+            \item We can easily compose them using $(bind \: f) \cdot g$
+            \item Or simply $bind \: f \cdot g$
+            \item Lets call this composition function $\bigotimes$
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{}
+    \begin{block}{}
+        \begin{itemize}
+            \item We now have half of our formal definition.
+            \item Bear with me a bit longer
+        \end{itemize}
+    \end{block}
+    \begin{block}{}
+        \begin{itemize}
+            \item Lets ask ourselves if we can create an identity (aka $unit$) function for this $bind$ method we just defined
+            \item So that $unit \bigotimes f = f \bigotimes unit = f$
+            \item Of course there is
+            \item We can just define unit as $unit \: x \rightarrow (x, ``")$
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{}
+    \begin{block}{}
+        \begin{itemize}
+            \item The fun thing about this $unit$ function is that we can use it to $lift$ a normal function to a debuggable function
+            \item $lift \: f = unit \cdot f$
+            \item This means that I can now compose a normal function with a debuggable functions.
+            \item $debugable \bigotimes lift \: normalfunction$
+            \item Of cource the debug output of our lifted normal function is just the empty string (thats how we defined $unit$
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+\begin{frame}[fragile]{}
+    \begin{block}{Summary of example}
+        \begin{itemize}
+            \item We stared with simple functions
+            \item We wanted to make them debuggable by having them output an additional string
+            \item We need to be able to compose small functions into smaller ones
+            \item We did not want to write a lot of boiler plate
+            \item We accomplished this by implementing $bind$, $unit$, $lift$ and $\bigotimes$
+        \end{itemize}
+    \end{block}
+\end{frame}
