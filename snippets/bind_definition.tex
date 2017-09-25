@@ -1,0 +1,5 @@
+\begin{minted}{haskell}
+bind f (float, string) =
+    let (new_float, new_string) = f(float)
+    in (new_float, string + new_string)
+\end{minted}

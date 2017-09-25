@@ -11,10 +11,7 @@
 \begin{frame}[fragile]
     \frametitle{Intuitive implementation}
     \begin{block}{}
-        \begin{itemize}
-            \item $f \: x \rightarrow (x+1, ``f \: was \: called")$
-            \item $g \: x \rightarrow (x+2, ``g \: was \: called")$
-        \end{itemize}
+        \input{./snippets/intuitive_implementation}
     \end{block}
     \begin{block}{}
         $f$ and $g$ both take a $float$ and return a tuple $(float, string)$
@@ -22,18 +19,9 @@
 \end{frame}
 
 \begin{frame}[fragile]
-    \input{./snippets/haskell_example}
-\end{frame}
-
-\begin{frame}[fragile]
     \frametitle{}
     \begin{block}{How to use this in composition $f \cdot g$}
-        \begin{itemize}
-            \item $y, logString_g = g(x)$
-            \item $z, logString_f = f(y)$
-            \item $log = logString_g + logString_f$
-            \item $return (z, log)$
-        \end{itemize}
+        \input{./snippets/composition}
     \end{block}
     \begin{block}{}
         It can be done, but it is ugly and long winded
@@ -43,52 +31,36 @@
 \begin{frame}[fragile]
     \frametitle{}
     \begin{block}{}
-        \begin{itemize}
-            \item if $f$ and $g$ simply took a $float$ and returned a $float$ we could write $f \cdot g$
-            \item $f \: x \rightarrow x+1$
-            \item $g \: x \rightarrow x+2$
-            \item $f \cdot g \: 3 \rightarrow 6$
-        \end{itemize}
+        if $f$ and $g$ simply took a $float$ and returned a $float$ we could write $f \cdot g$
+        \input{./snippets/matching_arguments}
     \end{block}
     \begin{block}{}
-        \begin{itemize}
-            \item But they take a $float$ and output a $(float, string)$. Simply composing them would not work
-            \item $f \: x \rightarrow (x+1, ``f \: called.")$
-            \item $g \: x \rightarrow (x+2, ``g \: called.")$
-            \item $f \cdot g \: 3 \rightarrow$ Error: f takes only one argument but got 2
-        \end{itemize}
+        But they take a $float$ and output a $(float, string)$. Simply composing them would not work
+        \input{./snippets/mismatching_arguments}
     \end{block}
 \end{frame}
 
 \begin{frame}[fragile]
     \frametitle{}
     \begin{block}{}
-        \begin{itemize}
-            \item Lets redefine $f$ and $g$
-            \item $f' \: x \: logSoFar \rightarrow (x+1, logSoFar + ``f \: called.")$
-            \item $g' \: x \: logSoFar \rightarrow (x+2, logSoFar + ``g \: called.")$
-            \item $f' \cdot g' \: 3 \: ``" \rightarrow (6, ``g \: called.f \: called.")$
-            \item So now this works. Jeej
-            \item Unfortunatly we don't have a $f'$ but an $f$ which is inconvenient
-        \end{itemize}
+        Lets redefine $f$ and $g$
+        \input{./snippets/redefine_matching_arguments}
+        So now this works. Jeej \\
+        Unfortunatly we don't have an $f'$ but an $f$ which is inconvenient
     \end{block}
 \end{frame}
 
 \begin{frame}[fragile]
     \frametitle{Small Tangent}
     \begin{block}{Simple type definition}
-        \begin{itemize}
-            \item $f$ is a function that takes a $float$ and returns a $(float, string)$
-            \item $f :: float \rightarrow (float, string)$
-        \end{itemize}
+        $f$ is a function that takes a $float$ and returns a $(float, string)$
+        \input{./snippets/simple_typedef}
     \end{block}
     \begin{block}{More complex type definition}
-        \begin{itemize}
-            \item $f$ is a function that takes a function $g$ and a $float$ and returns a $string$
-            \item the function $g$ that is an argument of $f$ will take a $float$ and return a $(float, string)$
-            \item $f :: g \rightarrow float \rightarrow string$
-            \item $f :: (float \rightarrow (float, string)) \rightarrow float \rightarrow string$
-        \end{itemize}
+        $f$ is a function that takes a function $g$ and a $float$ and returns a $string$ \\
+        the function $g$ that is an argument of $f$ will take a $float$ and return a $(float, string)$
+        \input{./snippets/complex_typedef}
+        AKA currying
     \end{block}
 \end{frame}
 
@@ -100,21 +72,17 @@
     \end{block}
     \begin{block}{Typedef of $bind$}
         \begin{itemize}
-            \item Iinputs: bind takes a function that takes a $float$ and returns a $string$ and a $(float, string)$
+            \item Inputs: bind takes a function that takes a $float$ and returns a $(float,string)$ and a $(float, string)$
             \item Output: a new function that will take a $(float, string)$ and returns a $(float, string)$
-            \item $bind :: (float \rightarrow (float, string)) \rightarrow (float, string) \rightarrow ((float, string) \rightarrow (float, string))$
         \end{itemize}
+        \input{./snippets/typedef_bind}
     \end{block}
 \end{frame}
 
 \begin{frame}[fragile]
     \frametitle{}
     \begin{block}{Define $bind$}
-        \begin{itemize}
-            \item $bind \: f' \: (g_f, g_s) = $
-            \item $\:\:\: let (f_f, f_s) = f'(g_f)$
-            \item $\:\:\: in (f_f, g_s + f_s)$
-        \end{itemize}
+        \input{./snippets/bind_definition}
     \end{block}
 \end{frame}
 
@@ -125,7 +93,8 @@
             \item Given a pair of debuggable functions $f$ and $g$ of type $float \rightarrow (float, string)$
             \item We can easily compose them using $(bind \: f) \cdot g$
             \item Or simply $bind \: f \cdot g$
-            \item Lets call this composition function $\bigotimes$
+            \item Lets call this composition function $>>=$
+            \item $f >>= g >>= h \: 3$
         \end{itemize}
     \end{block}
 \end{frame}
@@ -141,7 +110,7 @@
     \begin{block}{}
         \begin{itemize}
             \item Lets ask ourselves if we can create an identity (aka $unit$) function for this $bind$ method we just defined
-            \item So that $unit \bigotimes f = f \bigotimes unit = f$
+            \item So that $(unit >>= f) = (f >>= unit) = f$
             \item Of course there is
             \item We can just define unit as $unit \: x \rightarrow (x, ``")$
         \end{itemize}
@@ -155,7 +124,7 @@
             \item The fun thing about this $unit$ function is that we can use it to $lift$ a normal function to a debuggable function
             \item $lift \: f = unit \cdot f$
             \item This means that I can now compose a normal function with a debuggable functions.
-            \item $debugable \bigotimes lift \: normalfunction$
+            \item $debugable >>= lift \: normalfunction$
             \item Of cource the debug output of our lifted normal function is just the empty string (thats how we defined $unit$
         \end{itemize}
     \end{block}
@@ -164,11 +133,11 @@
 \begin{frame}[fragile]{}
     \begin{block}{Summary of example}
         \begin{itemize}
-            \item We stared with simple functions
+            \item We started with simple functions
             \item We wanted to make them debuggable by having them output an additional string
-            \item We need to be able to compose small functions into smaller ones
+            \item We need to be able to compose small functions into larger ones
             \item We did not want to write a lot of boiler plate
-            \item We accomplished this by implementing $bind$, $unit$, $lift$ and $\bigotimes$
+            \item We accomplished this by implementing $bind$, $unit$, $lift$ and $>>=$
         \end{itemize}
     \end{block}
 \end{frame}

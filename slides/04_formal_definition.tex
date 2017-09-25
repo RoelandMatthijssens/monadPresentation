@@ -1,8 +1,8 @@
 \begin{frame}[fragile]{}
     \begin{block}{}
         \begin{itemize}
-            \item We saw debuggable functions $Debuggable \: a = (a, string)$
-            \item We saw multivalued functions $Multivalued \: a = [a]$
+            \item We saw debuggable functions $Debuggable: \: a \rightarrow (a, string)$
+            \item We saw multivalued functions $Multivalued: \: a \rightarrow [a]$
             \item Make $Debuggable$ or $Multivalued$ abstract and call it $m$
             \item In both cases you get a function $a \rightarrow m \: a$
             \item For that specific m we define $bind$ and $unit$ (the others are in function of these two)
@@ -12,7 +12,12 @@
 
 \begin{frame}[fragile]{Formal definition}
     \begin{block}{}
-        A monad is a triplet $(m, bind, unit)$. $bind$ and $unit$ must satisfy a bunch of mathematical laws
+        A monad is a triplet $(m, bind, unit)$. $bind$ and $unit$ must satisfy 3 mathematical laws
+        \begin{itemize}
+            \item left-unity
+            \item right-unity
+            \item associativity
+        \end{itemize}
     \end{block}
 \end{frame}
 
@@ -38,13 +43,20 @@
 \end{frame}
 
 \begin{frame}[t]{}
-    \begin{block}{Other usefull monads}
+    \begin{block}{Other useful monads}
         \begin{itemize}
             \item Maybe Monad: Abstracts away null checks
             \item State Monad: Abstracts away creating new changed states and passing it arround your functions (e.g.  SeededRandom)
             \item Continuation Monad: Abstracts away call stack manipulations
+            \item IO monad: Abstract away screen state manipulation
             \item ...
         \end{itemize}
+    \end{block}
+\end{frame}
+
+\begin{frame}[fragile]{}
+    \begin{block}{Caveat of box analogy}
+        All 'boxes' can be seen as monads. But not all monads can be seen as boxes.
     \end{block}
 \end{frame}
 
@@ -58,6 +70,6 @@
         \end{itemize}
     \end{block}
     \begin{block}{}
-        And when you understand monads fully, you are ready for Arrows
+        And when you understand monads fully, you are ready to learn about Arrows :)
     \end{block}
 \end{frame}

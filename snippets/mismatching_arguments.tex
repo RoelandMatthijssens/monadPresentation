@@ -1,0 +1,6 @@
+\begin{minted}{haskell}
+f x -> (x+1, "f called.")
+g x -> (x+2, "g called.")
+f . g 3 ->
+ Error: f expects a float but received a tuple
+\end{minted}

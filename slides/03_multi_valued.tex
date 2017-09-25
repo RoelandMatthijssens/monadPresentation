@@ -5,40 +5,24 @@
 \end{frame}
 
 \begin{frame}[fragile]{Multiple return values}
-    \begin{block}{Real numbers}
-        \begin{itemize}
-            \item $sqrt :: real \rightarrow real$
-            \item $cbrt :: real \rightarrow real$
-            \item $sixthroot = sqrt \cdot cbrt$
-        \end{itemize}
-    \end{block}
-    \begin{block}{Complex numbers}
-        \begin{itemize}
-            \item $sqrt :: complex \rightarrow [complex]$
-            \item $cbrt :: complex \rightarrow [complex]$
-            \item $sixthroot = \: ???$
-        \end{itemize}
+    \begin{block}{}
+        \input{./snippets/multiple_return_values}
     \end{block}
 \end{frame}
 
 \begin{frame}[fragile]{}
-    \begin{block}{How to do $sqrt \cdot cbrt$}
+    \begin{block}{How to do $double \cdot primeFactors$}
         \begin{itemize}
-            \item First we apply the $cbrt$
-            \item For each result in the returned list we apply $sqrt$
-            \item This returns a new list of length 3 where each element is a list of length 2
-            \item To form a single list of all 6 roots we simply flatten the list
+            \item First we get the $primeFactors$
+            \item For each result in the returned list we apply $double$
+            \item This returns a new list where each element is a list of length 2
+            \item To form a single list of all results we simply flatten the list
         \end{itemize}
     \end{block}
 \end{frame}
 
 \begin{frame}[fragile]{}
     \begin{block}{Sounds familiar}
-        \begin{itemize}
-            \item $bind \: f \: x = concat ( map \: f \: x)$
-            \item $unit \: x = [x]$
-            \item $f \bigotimes g = bind \: f \cdot g$
-            \item $lift \: f = unit \cdot f$
-        \end{itemize}
+        \input{./snippets/list_monad}
     \end{block}
 \end{frame}

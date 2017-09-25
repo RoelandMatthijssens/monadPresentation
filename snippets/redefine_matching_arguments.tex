@@ -1,0 +1,5 @@
+\begin{minted}{haskell}
+f' x log -> (x+1, log + "f called.")
+g' x log -> (x+2, log + "g called.")
+f' . g' 3 "" -> (6, "g called.f called.")
+\end{minted}
