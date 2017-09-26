@@ -53,12 +53,12 @@
 \begin{frame}[fragile]
     \frametitle{Small Tangent}
     \begin{block}{Simple type definition}
-        $f$ is a function that takes a $float$ and returns a $(float, string)$
+        $f$ is a function that takes 2 $int$s and returns an $int$
         \input{./snippets/simple_typedef}
     \end{block}
     \begin{block}{More complex type definition}
-        $f$ is a function that takes a function $g$ and a $float$ and returns a $string$ \\
-        the function $g$ that is an argument of $f$ will take a $float$ and return a $(float, string)$
+        $f$ is a function that takes a function $g$ and an $int$ and returns an $int$ \\
+        the function $g$ that is an argument of $f$ will also take an $int$ and return an $int$
         \input{./snippets/complex_typedef}
         AKA currying
     \end{block}
